@@ -1,0 +1,32 @@
+<% if (locals.success) { %>
+  <div>
+    <div class="green lighten-4 green-text text-darken-4 chip">
+      <%= locals.success %>
+      <i class="close material-icons">close</i>
+    </div>
+  </div>
+<% } %>
+<% if (locals.info) { %>
+  <div>
+    <div class="blue lighten-4 blue-text text-darken-4 chip">
+      <%= locals.info %>
+      <i class="close material-icons">close</i>
+    </div>
+  </div>
+<% } %>
+<% if (locals.warning) { %>
+  <div>
+    <div class="yellow lighten-4 yellow-text text-darken-4 chip">
+      <%= locals.warning %>
+      <i class="close material-icons">close</i>
+    </div>
+  </div>
+<% } %>
+<% if (locals.error) { %>
+  <div>
+    <div class="red lighten-4 red-text text-darken-4 chip">
+      <%= locals.error %>
+      <i class="close material-icons">close</i>
+    </div>
+  </div>
+<% } %>

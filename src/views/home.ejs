@@ -1,0 +1,18 @@
+<%- include('partials/_header') %>
+
+<div class="valign-wrapper row">
+  <div class="col card hoverable s12 m8 offset-m2">
+    <div class="card-content">
+      <% if (!locals.userId) { %>
+        <h3 class="center-align">Welcome</h3>
+        <div class="center-align"><a href="/login" class="btn">Login</a></div>
+      <% } %>
+      <% if (locals.userId) { %>
+        <h3 class="center-align">Welcome <%= locals.username %></h3>
+        <div class="center-align"><a href="/logout" class="btn">Logout</a></div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/_footer') %>

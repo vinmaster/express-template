@@ -1,0 +1,22 @@
+<%- include('partials/_header') %>
+
+<style>
+main {
+  background: #29b6f6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #ff9800, #29b6f6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #ff9800, #29b6f6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+</style>
+
+<div class="valign-wrapper row">
+  <div class="col card hoverable s10 offset-s1">
+    <div class="card-content">
+      <h3 class="center-align">Uh oh! <%= locals.status %> - <%= locals.message %></h3>
+      <% if (process.env.NODE_ENV === 'development') { %>
+        <div><%- locals.info %></div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/_footer') %>

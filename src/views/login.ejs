@@ -1,0 +1,30 @@
+<%- include('partials/_header') %>
+
+<div class="valign-wrapper row login-box">
+  <div class="col card hoverable s10 offset-s1 m6 offset-m3 l4 offset-l4">
+    <form method="post">
+      <div class="card-content">
+        <span class="card-title center-align">Login</span>
+
+        <%- include('partials/_alerts', locals) %>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <label for="username">Username</label>
+            <input type="text" class="validate" name="username" id="username" />
+          </div>
+          <div class="input-field col s12">
+            <label for="password">Password</label>
+            <input type="password" class="validate" name="password" id="password" />
+          </div>
+        </div>
+      </div>
+      <div class="card-action right-align">
+        <input type="reset" id="reset" class="btn-flat grey-text waves-effect">
+        <input type="submit" class="btn green waves-effect waves-light" value="Login">
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/_footer') %>

@@ -1,0 +1,3 @@
+/* global M */
+
+M.AutoInit();
