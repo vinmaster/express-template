@@ -3,25 +3,26 @@ const session = require('express-session');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 // const favicon = require('serve-favicon');
 const path = require('path');
 
 // Create express application
 const app = express();
+const env = app.get('env');
+const Helper = require(`${process.cwd()}/src/lib/helper`);
 
 // Load .env for development before process.env is used
-if (app.get('env') === 'development' || app.get('env') === 'test') {
+if (env === 'development' || env === 'test') {
   require('dotenv').config(); // eslint-disable-line
 }
 
-// const env = app.get('env');
-
 // Morgan
-// if (env === 'development') {
-//   app.use(morgan('dev', { skip: Helper.skipReq }));
-// } else if (env !== 'test') {
-//   app.use(morgan('[:date[clf]] ":method :url" :status :response-time ms', { skip: Helper.skipReq }));
-// }
+if (env === 'development') {
+  app.use(morgan('dev', { skip: Helper.skipReq }));
+} else if (env !== 'test') {
+  app.use(morgan('[:date[clf]] ":method :url" :status :response-time ms', { skip: Helper.skipReq }));
+}
 
 // Handle node errors
 process.on('unhandledRejection', error => {
