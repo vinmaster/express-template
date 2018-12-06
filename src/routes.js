@@ -70,16 +70,16 @@ router.use((req, res, next) => {
 });
 router.use((err, req, res, _next) => {
   const {
-    status, message, error,
-  } = Helper.digestError(err);
-  let {
+    status, message, error, info,
+  } = Helper.digestError(err, { html: true });
+  console.error(`${error.message}\n${error.stack}`); // eslint-disable-line no-console
+
+  return res.status(status).render('error', {
+    title: `${status} - ${message}`,
+    status,
+    message,
     info,
-  } = Helper.digestError(err);
-  console.error(error); // eslint-disable-line no-console
-  info = error.stack.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-  info = info.replace(/ /g, '&nbsp;');
-  info = info.replace(/[a-z_-\d]+.js:\d+:\d+/gi, '<mark>$&</mark>');
-  return res.status(status).render('error', { status, message, info });
+  });
 });
 
 module.exports = router;

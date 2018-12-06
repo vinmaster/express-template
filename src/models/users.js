@@ -4,14 +4,18 @@ const SALT_WORK_FACTOR = 10;
 
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define('User', {
-    username: Sequelize.TEXT,
-    password: Sequelize.TEXT,
+    username: Sequelize.STRING,
+    password: {
+      type: Sequelize.VIRTUAL,
+    },
+    passwordHash: Sequelize.TEXT,
+    refreshToken: Sequelize.STRING,
     lastLoginAt: Sequelize.DATE,
   });
 
   User.prototype.verifyPassword = async function verifyPassword(password) {
     return new Promise((resolve, reject) => {
-      bcrypt.compare(password, this.password, (err, isMatch) => {
+      bcrypt.compare(password, this.passwordHash, (err, isMatch) => {
         if (err) reject(err);
         else resolve(isMatch);
       });
@@ -38,7 +42,6 @@ module.exports = (sequelize, Sequelize) => {
 
   User.register = async (username, password) => {
     username = username && username.toLowerCase();
-    password = await User.hashPassword(password);
     const user = await User.findOne({ where: { username } });
     if (user) return null;
     return User.create({ username, password });
@@ -52,6 +55,12 @@ module.exports = (sequelize, Sequelize) => {
     if (!isValid) return null;
     return user;
   };
+
+  User.hook('beforeSave', async (user, _options) => {
+    if (user.password) {
+      user.passwordHash = await User.hashPassword(user.password);
+    }
+  });
 
   return User;
 };

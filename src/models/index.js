@@ -7,6 +7,7 @@ const env = process.env.NODE_ENV || 'development';
 const models = {};
 
 let sequelize;
+
 if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
@@ -16,9 +17,11 @@ if (process.env.DATABASE_URL) {
     },
   });
 } else if (env === 'development' || !process.env.DATABASE_URL) {
+  const logging = env !== 'test';
   sequelize = new Sequelize('database', 'username', 'password', {
     dialect: 'sqlite',
     storage: `./${env}.sqlite`,
+    logging,
   });
 } else {
   throw new Error('Cannot setup database connection');
