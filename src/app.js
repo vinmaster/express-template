@@ -10,12 +10,14 @@ const path = require('path');
 // Create express application
 const app = express();
 const env = app.get('env');
-const Helper = require(`${process.cwd()}/src/lib/helper`);
 
 // Load .env for development before process.env is used
 if (env === 'development' || env === 'test') {
   require('dotenv').config(); // eslint-disable-line
 }
+
+const Helper = require(`${process.cwd()}/src/lib/helper`);
+const Logger = require(`${process.cwd()}/src/lib/logger`);
 
 // Morgan
 if (env === 'development') {
@@ -26,11 +28,11 @@ if (env === 'development') {
 
 // Handle node errors
 process.on('unhandledRejection', error => {
-  console.error(`unhandledRejection ${error.stack}`); // eslint-disable-line no-console
+  Logger.error(`unhandledRejection ${error.stack}`);
   throw error;
 });
 process.on('uncaughtException', error => {
-  console.error(`uncaughtException ${error.stack}`); // eslint-disable-line no-console
+  Logger.error(`uncaughtException ${error.stack}`);
   throw error;
 });
 
@@ -39,7 +41,7 @@ const force = process.env.DB_FORCE_SYNC === 'true';
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 models.sequelize.sync({ force }).then(() => {
-  console.log('Sequelize synced'); // eslint-disable-line no-console
+  Logger.info('Sequelize synced');
 });
 
 app.use(session({

@@ -2,6 +2,7 @@ const express = require('express');
 const RateLimit = require('express-rate-limit');
 
 const Helper = require(`${process.cwd()}/src/lib/helper`);
+const Logger = require(`${process.cwd()}/src/lib/logger`);
 const ApplicationController = require(`${process.cwd()}/src/controllers/application`);
 const router = express.Router();
 const limiter = new RateLimit({
@@ -44,7 +45,8 @@ apiRouter.use((err, req, res, _next) => {
   const {
     status, message, info, error,
   } = Helper.digestError(err);
-  console.error(error); // eslint-disable-line no-console
+  // Logger.error(error);
+  Logger.error(`${error.message}\n${error.stack}`);
   // res.format({
   //   // Based on the `Accept` http header
   //   'text/html': () => res.render(info), // Form Submit, Reload the page
@@ -72,7 +74,7 @@ router.use((err, req, res, _next) => {
   const {
     status, message, error, info,
   } = Helper.digestError(err, { html: true });
-  console.error(`${error.message}\n${error.stack}`); // eslint-disable-line no-console
+  Logger.error(`${error.message}\n${error.stack}`);
 
   return res.status(status).render('error', {
     title: `${status} - ${message}`,

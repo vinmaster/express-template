@@ -1,4 +1,5 @@
 const Helper = require(`${process.cwd()}/src/lib/helper`);
+const Logger = require(`${process.cwd()}/src/lib/logger`);
 const Models = require(`${process.cwd()}/src/models/index`);
 const { User } = Models;
 
@@ -74,7 +75,7 @@ module.exports = {
     }
   },
   test(_req, res, _next) {
-    // console.log('THIS IS TEST INFO');
+    Logger.info('THIS IS TEST INFO');
     Helper.renderSuccessJson(res, 'test');
   },
 };
